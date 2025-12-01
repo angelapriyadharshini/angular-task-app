@@ -5,12 +5,16 @@ import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { Tasks } from './tasks/tasks';
 import { TaskList } from './tasks/task-list/task-list';
+import { TaskDetail } from './tasks/task-detail/task-detail';
+import { TaskItem } from './tasks/task-list/task-item/task-item';
 
 @NgModule({
   declarations: [
     App,
     Tasks,
-    TaskList
+    TaskList,
+    TaskDetail,
+    TaskItem
   ],
   imports: [
     BrowserModule,

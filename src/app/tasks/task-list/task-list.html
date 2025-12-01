@@ -1,1 +1,22 @@
-<p>task-list works!</p>
+<div class="row mb-4  mt-4">
+    <div class="col-md-12">
+        <button class="btn btn-success float-end">New</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        @for (task of tasks; track task.title) {
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{task.title}}</h5>
+                <p class="card-text">{{task.description}}</p>
+                <button type="button" class="btn btn-primary">{{task.status}}</button>
+                <button type="button" class="btn btn-outline-dark float-end">Details</button>
+            </div>
+
+        </div>
+        } @empty {
+        <div>There are no tasks.</div>
+        }
+    </div>
+</div>
