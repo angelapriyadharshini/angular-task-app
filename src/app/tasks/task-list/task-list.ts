@@ -1,6 +1,6 @@
 import { Component, OnInit, signal, computed } from '@angular/core';
 
-import { Task } from '../task.model';
+import { Task } from '../models/task.model';
 
 @Component({
   selector: 'app-task-list',
@@ -9,11 +9,16 @@ import { Task } from '../task.model';
   styleUrl: './task-list.css',
 })
 export class TaskList implements OnInit {
-  badgePrefix: string = 'btn-';
+  badgePrefix: string = 'btn-outline-';
   tasks: Task[] = [
-    new Task('Fix login bug', 'Users are unable to log in when entering correct credentials', new Date("2025-11-20T10:00:00Z"), 'Done'),
-    new Task('Implement search', 'Need a search bar to locate a specific task', new Date("2025-12-01T10:00:00Z"), 'In Progress'),
-    new Task('Update documentation', 'The documentation for Angular to be updated to the latest version', new Date("2025-11-22T10:00:00Z"), 'Pending')
+    {id: 1, title: 'Fix login bug', description: 'Users are unable to log in when entering correct credentials', createdAt: new Date("2025-11-20T10:00:00Z"), status: 'Done', taskType: 'Bug'},
+    {id: 2, title: 'Implement search', description: 'Need a search bar to locate a specific task', createdAt: new Date("2025-12-01T10:00:00Z"), status: 'Pending', taskType: 'Bug'},
+    {id: 3, title: 'Update documentation', description: 'Users are unable to log in when entering correct credentials', createdAt: new Date("2025-11-20T10:00:00Z"), status: 'In Progress', taskType: 'Task'},
+    {id: 4, title: 'Fix documentation bug', description: 'Users are unable to log in when entering correct credentials', createdAt: new Date("2025-11-20T10:00:00Z"), status: 'Pending', taskType: 'Bug'},
+    {id: 5, title: 'UI issue', description: 'Users are unable to log in when entering correct credentials', createdAt: new Date("2025-11-10T10:00:00Z"), status: 'Done', taskType: 'Bug'},
+    {id: 6, title: 'Duplicating values', description: 'Users are unable to log in when entering correct credentials', createdAt: new Date("2025-11-15T10:00:00Z"), status: 'Pending', taskType: 'Bug'},
+    {id: 7, title: 'Add a button', description: 'Users are unable to log in when entering correct credentials', createdAt: new Date("2025-11-20T10:00:00Z"), status: 'Done', taskType: 'Feature'},
+    {id: 8, title: 'Modify banner width', description: 'Users are unable to log in when entering correct credentials', createdAt: new Date("2025-11-12T10:00:00Z"), status: 'Done', taskType: 'Feature'}
   ];
 
   ngOnInit(): void {
@@ -27,7 +32,9 @@ export class TaskList implements OnInit {
       return  `${this.badgePrefix}secondary`;
     } else if (status === 'Done') {
       return  `${this.badgePrefix}success`;
-    } else if (status === 'Closed') {
+    } else if (status === 'New') {
+      return  `${this.badgePrefix}primary`;
+    } else {
       return  `${this.badgePrefix}dark`;
     }
   }

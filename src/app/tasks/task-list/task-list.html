@@ -10,13 +10,16 @@
             <div class="card-body">
                 <h5 class="card-title">{{task.title}}</h5>
                 <p class="card-text">{{task.description}}</p>
-                <button type="button" class="btn btn-primary" [ngClass]="dynamicClass(task.status)">{{task.status}}</button>
-                <button type="button" class="btn btn-outline-dark float-end">Details</button>
+                <button type="button" class="btn" [ngClass]="dynamicClass(task.status)">{{task.status}}</button>
+                <button type="button" class="btn btn-outline-dark float-end" (click)="openTaskDetail(task.id)">Details</button>
             </div>
-
         </div>
         } @empty {
-        <div>There are no items.</div>
+        <div class="card mb-4">
+            <div class="card-body">
+                <p class="card-text">There are no items.</p>
+            </div>
+        </div>
         }
     </div>
 </div>
