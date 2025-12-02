@@ -11,7 +11,7 @@
                 <h5 class="card-title">{{task.title}}</h5>
                 <p class="card-text">{{task.description}}</p>
                 <button type="button" class="btn" [ngClass]="dynamicClass(task.status)">{{task.status}}</button>
-                <button type="button" class="btn btn-outline-dark float-end" (click)="openTaskDetail(task.id)">Details</button>
+                <button type="button" class="btn btn-outline-dark float-end" (click)="goToDetail(task.id)">Details</button>
             </div>
         </div>
         } @empty {
