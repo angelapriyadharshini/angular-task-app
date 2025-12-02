@@ -1,6 +1,6 @@
 <div class="row mb-4  mt-4">
     <div class="col-md-12">
-        <button class="btn btn-success float-end">New</button>
+        <button class="btn btn-success float-end"><i class="bi bi-plus-lg"></i></button>
     </div>
 </div>
 <div class="row">
@@ -10,13 +10,13 @@
             <div class="card-body">
                 <h5 class="card-title">{{task.title}}</h5>
                 <p class="card-text">{{task.description}}</p>
-                <button type="button" class="btn btn-primary">{{task.status}}</button>
+                <button type="button" class="btn btn-primary" [ngClass]="dynamicClass(task.status)">{{task.status}}</button>
                 <button type="button" class="btn btn-outline-dark float-end">Details</button>
             </div>
 
         </div>
         } @empty {
-        <div>There are no tasks.</div>
+        <div>There are no items.</div>
         }
     </div>
 </div>
