@@ -1,0 +1,12 @@
+.alert-style {
+    position: fixed;
+    z-index: 1;
+    right: 1%;
+    bottom: 0;
+    width: inherit;
+    height: auto;
+}
+
+.status-button {
+    cursor: default;
+}

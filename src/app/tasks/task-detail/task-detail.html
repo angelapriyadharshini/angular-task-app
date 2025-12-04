@@ -1,41 +1,41 @@
+<!-- Edit status display alerts -->
+@if (isEditSuccess()) {
+<div class="alert alert-success alert-style" role="alert">
+    The task '{{taskData().title}}' updated successfully!
+</div>
+}
+@if (isEditFailed()) {
+<div class="alert alert-danger alert-style" role="alert">
+    {{updateErrorMsg()}}
+</div>
+}
+
+<!-- Task detail page content -->
 <div class="row">
-    <div class="col-md-12">
-        <h1>Task Title</h1>
-        <h1>Current Task Id{{taskId()}}</h1>
-        <button type="button" class="btn" [ngClass]="">Status</button>
-        <p class="card-text">Description</p>
-        <p class="card-text">Date</p>
+    <div class="col-md-12 mt-4 mb-4">
+        <button type="button" class="btn btn-outline-dark" (click)="goBack()"><i
+                class="bi bi-chevron-left"></i>Back</button>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-md-12 col-sm-12">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="card-title mt-4">{{taskData().title}}</h3>
+
+                <button type="button" class="btn mt-4" disabled
+                    [ngClass]="taskData().status | dynamicClass">{{taskData().status}}</button>
+
+                <p class="card-text mt-4">{{taskData().description}}</p>
+                <p class="card-text mt-4">Created On {{taskData().createdAt | date: 'medium'}}</p>
+                <div class="btn-group mt-5 float-end" role="group">
+                    <button type="button" class="btn btn-outline-dark" (click)="openTaskEditModal()">Edit</button>
+                    <button type="button" class="btn btn-outline-dark" (click)="deleteTask()">Delete</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-
-<!-- for edit page -->
-
-
-<!-- <div class="row">
-    <div class="col-md-12">
-        <form>
-            <div class="row">
-                <div class="col-sm-5 form-group">
-                    <label for="title">Title</label>
-                    <input type="text" id="title" class="form-control">
-                </div>
-                <div class="col-sm-5 form-group">
-                    <label for="description">Description</label>
-                    <input type="text" id="description" class="form-control">
-                </div>
-                <div class="col-sm-5 form-group">
-                    <select [(ngModel)]="selectedValue" class="form-select">
-                        @for (status of statuses; track status.value) {
-                        <option [value]="status.id">{{ status.label }}</option>
-                        }
-                    </select>
-                </div>
-                <div class="col-sm-5 form-group">
-                    <label for="myDate">Select Date:</label>
-      <input type="date" id="myDate" formControlName="myDate">
-                </div>
-            </div>
-        </form>
-    </div>
-</div> -->
+<!-- Edit task model dialog -->
+<app-edit-dialog #editDialog (taskResponse)="handleTaskResponse($event)"></app-edit-dialog>
