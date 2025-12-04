@@ -1,7 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, signal, ViewChild } from '@angular/core';
 
 import { Task } from '../models/task.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TaskService } from '../services/task-service';
+import { EditDialogComponent } from '../../shared/dialogs/edit-dialog.component';
+import { LIST_ERROR, SUCCESS_MSG } from '../../shared/constants';
 
 @Component({
   selector: 'app-task-list',
@@ -9,39 +12,92 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './task-list.html',
   styleUrl: './task-list.css',
 })
-export class TaskList implements OnInit {
+export class TaskList {
+  private taskService = inject(TaskService);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
-  badgePrefix: string = 'btn-outline-';
-  tasks: Task[] = [
-    {id: 1, title: 'Fix login bug', description: 'Users are unable to log in when entering correct credentials', createdAt: new Date("2025-11-20T10:00:00Z"), status: 'Done', taskType: 'Bug'},
-    {id: 2, title: 'Implement search', description: 'Need a search bar to locate a specific task', createdAt: new Date("2025-12-01T10:00:00Z"), status: 'Pending', taskType: 'Bug'},
-    {id: 3, title: 'Update documentation', description: 'Users are unable to log in when entering correct credentials', createdAt: new Date("2025-11-20T10:00:00Z"), status: 'In Progress', taskType: 'Task'},
-    {id: 4, title: 'Fix documentation bug', description: 'Users are unable to log in when entering correct credentials', createdAt: new Date("2025-11-20T10:00:00Z"), status: 'Pending', taskType: 'Bug'},
-    {id: 5, title: 'UI issue', description: 'Users are unable to log in when entering correct credentials', createdAt: new Date("2025-11-10T10:00:00Z"), status: 'Done', taskType: 'Bug'},
-    {id: 6, title: 'Duplicating values', description: 'Users are unable to log in when entering correct credentials', createdAt: new Date("2025-11-15T10:00:00Z"), status: 'Pending', taskType: 'Bug'},
-    {id: 7, title: 'Add a button', description: 'Users are unable to log in when entering correct credentials', createdAt: new Date("2025-11-20T10:00:00Z"), status: 'Done', taskType: 'Feature'},
-    {id: 8, title: 'Modify banner width', description: 'Users are unable to log in when entering correct credentials', createdAt: new Date("2025-11-12T10:00:00Z"), status: 'Done', taskType: 'Feature'}
-  ];
 
-  ngOnInit(): void {
+  @ViewChild('editDialog', { static: false }) dialog!: EditDialogComponent;
+
+  tasks = signal<Task[]>([]);
+  taskData = signal<Task>({
+    title: '',
+    description: '',
+    status: '',
+    createdAt: new Date(),
+    taskType: ''
+  });
+  isRequestSuccess = signal(false);
+  filteredTaskList = signal<Task[]>([]);
+  errorMsg = signal(LIST_ERROR);
+  taskSuccessMsg = signal(SUCCESS_MSG);
+  isError = signal(false);
+
+  isAscendingOrder: boolean = true;
+
+  constructor() {
+    // loading the tasks initiallly
+    this.taskService.getTasks().subscribe({
+      next: (response) => {
+        this.tasks.set(response);
+        this.filteredTaskList.set(this.tasks());
+      },
+      error: (error) => {
+        this.isError.set(true);
+        setTimeout(() => {
+          this.isError.set(false);
+        }, 3000);
+      }
+    });
+  }
+
+  openTaskEditModal() {
+    const isEditMode = false;
+    this.dialog.open(0, this.taskData(), isEditMode);
+  }
+
+  handleTaskResponse(response) {
+    if (response) {
+      this.isRequestSuccess.set(true);
+      this.taskService.getTasks().subscribe({
+        next: (response) => {
+          this.tasks.set(response);
+          this.filteredTaskList.set(this.tasks());
+        },
+        error: (error) => {
+          console.log(error)
+        }
+      });
+      setTimeout(() => {
+        this.isRequestSuccess.set(false);
+      }, 3000);
+    }
   }
 
   goToDetail(id: number) {
     this.router.navigate([id], { relativeTo: this.activatedRoute });
   }
 
-  dynamicClass(status: string): string {
-    if(status === 'In Progress') {
-      return  `${this.badgePrefix}warning`;
-    } else if (status === 'Pending'){
-      return  `${this.badgePrefix}secondary`;
-    } else if (status === 'Done') {
-      return  `${this.badgePrefix}success`;
-    } else if (status === 'New') {
-      return  `${this.badgePrefix}primary`;
-    } else {
-      return  `${this.badgePrefix}dark`;
-    }
+  // to be moved to utility class
+  // sort all the tasks by title
+  sortTasks() {
+    this.isAscendingOrder = !this.isAscendingOrder;
+    this.filteredTaskList.set(this.filteredTaskList().sort((a, b) => {
+      if (this.isAscendingOrder) {
+        return a.title.localeCompare(b.title);
+      } else {
+        return b.title.localeCompare(a.title);
+      }
+    }));
   }
+
+  // to be moved to utility class
+  searchTasks(text: string) {
+    if (!text) {
+      this.filteredTaskList.set(this.tasks());
+    }
+    this.filteredTaskList.set(this.tasks().filter((task) =>
+      task?.title.toLowerCase().includes(text.toLowerCase())));
+  }
+
 }

@@ -1,25 +1,60 @@
-<div class="row mb-4  mt-4">
+<!-- alert pop-ups -->
+@if (isRequestSuccess()) {
+<div class="alert alert-success alert-style" role="alert">
+    {{taskSuccessMsg()}}
+</div>
+}
+
+@if (isError()) {
+<div class="alert alert-danger alert-style" role="alert">
+    {{errorMsg()}}
+</div>
+}
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <h2>Task List</h2>
+    </div>
+    <div class="col-md-6">
+        <button class="btn btn-outline-success float-end ms-3" (click)="openTaskEditModal()"><i
+                class="bi bi-plus-lg"></i></button>
+        <button class="btn btn-outline-dark float-end" (click)="sortTasks()"><i
+                class="bi bi-arrow-down-up"></i></button>
+    </div>
+</div>
+<div class="row mt-4">
     <div class="col-md-12">
-        <button class="btn btn-success float-end"><i class="bi bi-plus-lg"></i></button>
+
+    </div>
+</div>
+<div class="row mb-5">
+    <div class="col-md-12">
+        <input type="text" class="form-control" placeholder="Search by title" #search
+            (keyup)="searchTasks(search.value)">
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
-        @for (task of tasks; track task.title) {
+        @for (task of filteredTaskList(); track $index) {
         <div class="card mb-4">
             <div class="card-body">
                 <h5 class="card-title">{{task.title}}</h5>
                 <p class="card-text">{{task.description}}</p>
-                <button type="button" class="btn" [ngClass]="dynamicClass(task.status)">{{task.status}}</button>
-                <button type="button" class="btn btn-outline-dark float-end" (click)="goToDetail(task.id)">Details</button>
+                <button type="button" class="btn" disabled
+                    [ngClass]="task.status | dynamicClass">{{task.status}}</button>
+                <button type="button" class="btn btn-outline-dark float-end"
+                    (click)="goToDetail(task.id)">Details</button>
             </div>
         </div>
-        } @empty {
+        }@empty {
         <div class="card mb-4">
             <div class="card-body">
-                <p class="card-text">There are no items.</p>
+                <p class="card-text">There are no tasks.</p>
             </div>
         </div>
         }
     </div>
 </div>
+
+<!-- Edit task model dialog -->
+<app-edit-dialog #editDialog (taskResponse)="handleTaskResponse($event)"></app-edit-dialog>
