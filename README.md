@@ -57,3 +57,17 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+
+## Running the Mock JSON Server
+Install JSON Server globally:
+```bash
+npm install -g json-server
+```
+    
+Start JSON Server:
+    Inside the project folder, 
+```bash
+json-server --watch db.json --port 3000
+```
+Now mock data will be available at http://localhost:3000/tasks
