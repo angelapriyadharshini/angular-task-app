@@ -1,0 +1,67 @@
+{
+  "tasks": [
+    {
+      "title": "Fix login bug",
+      "description": "Users report that the login functionality is failing. When valid credentials are entered, the system does not authenticate the user and the login attempt is rejected.",
+      "status": "Done",
+      "taskType": "Bug",
+      "createdAt": "2025-12-04T12:18:16.776Z",
+      "id": "1"
+    },
+    {
+      "id": "2",
+      "title": "Implement search",
+      "description": "Need a search bar to locate a specific task",
+      "createdAt": "Mon Dec 01 2025 15:30:00 GMT+0530 (India Standard Time)",
+      "status": "Pending",
+      "taskType": "Bug"
+    },
+    {
+      "id": "3",
+      "title": "Update documentation",
+      "description": "Users are unable to log in when entering correct credentials",
+      "createdAt": "Thu Nov 20 2025 15:30:00 GMT+0530 (India Standard Time)",
+      "status": "In Progress",
+      "taskType": "Task"
+    },
+    {
+      "id": "4",
+      "title": "Fix documentation bug",
+      "description": "Users are unable to log in when entering correct credentials",
+      "createdAt": "Thu Nov 20 2025 15:30:00 GMT+0530 (India Standard Time)",
+      "status": "Pending",
+      "taskType": "Bug"
+    },
+    {
+      "title": "UI issue when updating user",
+      "description": "Users are getting a blank screen when updating details.",
+      "status": "Done",
+      "taskType": "Bug",
+      "id": "5"
+    },
+    {
+      "id": "6",
+      "title": "Duplicating values",
+      "description": "Users report that the login functionality is failing. When valid credentials are entered, the system does not authenticate the user and the login attempt is rejected.",
+      "createdAt": "Sat Nov 15 2025 15:30:00 GMT+0530 (India Standard Time)",
+      "status": "Pending",
+      "taskType": "Bug"
+    },
+    {
+      "id": "7",
+      "title": "Add a button",
+      "description": "Users are unable to log in when entering correct credentials",
+      "createdAt": "Thu Nov 20 2025 15:30:00 GMT+0530 (India Standard Time)",
+      "status": "Done",
+      "taskType": "Feature"
+    },
+    {
+      "id": "8",
+      "title": "Modify banner width",
+      "description": "Users are unable to log in when entering correct credentials",
+      "createdAt": "Wed Nov 12 2025 15:30:00 GMT+0530 (India Standard Time)",
+      "status": "Done",
+      "taskType": "Feature"
+    }
+  ]
+}
