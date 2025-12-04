@@ -6,7 +6,10 @@ import { App } from './app';
 import { Tasks } from './tasks/tasks';
 import { TaskList } from './tasks/task-list/task-list';
 import { TaskDetail } from './tasks/task-detail/task-detail';
-import { TaskItem } from './tasks/task-list/task-item/task-item';
+import { Header } from './shared/components/header/header';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DynamicClassPipe } from './shared/pipes/dynamic-class-pipe';
+import { EditDialogComponent } from "./shared/dialogs/edit-dialog.component";
 
 @NgModule({
   declarations: [
@@ -14,12 +17,16 @@ import { TaskItem } from './tasks/task-list/task-item/task-item';
     Tasks,
     TaskList,
     TaskDetail,
-    TaskItem
+    Header,
+    DynamicClassPipe
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
-  ],
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    EditDialogComponent
+],
   providers: [
     provideBrowserGlobalErrorListeners()
   ],
